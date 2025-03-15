@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "labofdoors:block/corruption_dust_block"
+  }
+}
