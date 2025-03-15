@@ -25,7 +25,11 @@
 package me.talonwettstein.labofdoors;
 
 import com.mojang.logging.LogUtils;
+import me.talonwettstein.labofdoors.block.ModBlocks;
+import me.talonwettstein.labofdoors.item.ModCreativeModeTabs;
+import me.talonwettstein.labofdoors.item.ModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -52,6 +56,11 @@ public class LabOfDoors
 
     public LabOfDoors(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
+
+        ModCreativeModeTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -81,7 +90,15 @@ public class LabOfDoors
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.CORRUPTION_DUST);
+            event.accept(ModItems.REFINED_CORRUPTION_DUST);
+        }
 
+        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.accept(ModItems.CORRUPTION_DUST);
+            event.accept(ModBlocks.CORRUPTION_DUST_BLOCK);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
